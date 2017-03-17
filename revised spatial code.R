@@ -16,7 +16,8 @@ summary(reg1)
 
 W.eig <- eigenw(nyQ1.gal, quiet=NULL)
 ny.lag.eig <- lagsarlm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH,
-                       data=ny, nyQ1.gal, method="eigen", quiet=TRUE, control=(pre_eig=W.eig)) # How to use pre-calculated eigenvalues
+ data=ny, nyQ1.gal, method="eigen", quiet=TRUE, control=(pre_eig=W.eig), zero.policy = TRUE) # How to use pre-calculated eigenvalues
+
 summary(ny.lag.eig)
 w_mat <- nb2mat(nygal, zero.policy=T)
 w_mat <- ifelse(w_mat != 0, 1, 0)
@@ -43,6 +44,3 @@ gw.model1 <- gwr.basic(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH,
   bw = bw1, data = ny, kernel = "gaussian", adaptive = TRUE, p = 2, 
   longlat = FALSE)
 gw.model1
-
-
-
