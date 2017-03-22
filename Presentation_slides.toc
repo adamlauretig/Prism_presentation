@@ -1,0 +1,7 @@
+\beamer@endinputifotherversion {3.36pt}
+\beamer@sectionintoc {2}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {3}{Spatial Data Prep}{9}{0}{2}
+\beamer@sectionintoc {4}{Spatial Autocorrelation}{18}{0}{3}
+\beamer@sectionintoc {5}{Regression}{39}{0}{4}
+\beamer@sectionintoc {6}{Spatial Regression}{54}{0}{5}
+\beamer@sectionintoc {7}{Discussion}{65}{0}{6}
