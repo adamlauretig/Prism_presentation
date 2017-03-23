@@ -513,13 +513,80 @@ YES!
 \begin{frame}{SAR vs. CAR}
 \begin{itemize}
 \item SAR: $$ y_i \sim N(0, (I-W)^{-1} D^{\sim} (I-W)'^{-1}) $$
- $$ \sigma_{SAR} = \sigma^{2} (I - W)^{-1} V_{\epsilon} (I - W')^{-1} $$
+ $$ \sum_{SAR} = \sigma^{2} (I - W)^{-1} V_{\epsilon} (I - W')^{-1} $$
 \item CAR: $$ y_i \sim N(0, (I-C)^{-1} D )$$
  $$ \sum_{CAR} = \sigma^{2} (I - C)^{-1} V_{C} $$
 \end{itemize}
 \end{frame}
 
 
+\begin{frame}{SAR vs. CAR}
+\begin{itemize}
+\item CAR only requires the variance to estimate, SAR requires the full variance-covariance matrix
+\item CAR is computationally less intensive
+\item CAR: local/first order dependency
+\item CAR: fit with MCMC -- can fit GLMs
+\item SAR: global/higher order dependency
+\item SAR: fit with MLE
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Fitting a CAR (1)}
+% latex table generated in R 3.3.2 by xtable 1.8-2 package
+% Wed Mar 22 22:35:40 2017
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrrrr}
+  \hline
+ & Median & 2.5\% & 97.5\% & n.sample & \% accept & n.effective & Geweke.diag \\ 
+  \hline
+(Intercept) & -0.60 & -2.35 & 1.08 & 18000.00 & 100.00 & 2417.70 & 0.50 \\ 
+  PctWht & -0.01 & -0.02 & -0.01 & 18000.00 & 100.00 & 2973.70 & 1.40 \\ 
+  PctHisp & 0.01 & 0.01 & 0.02 & 18000.00 & 100.00 & 2592.00 & -0.80 \\ 
+  Gini & 3.98 & 2.10 & 5.97 & 18000.00 & 100.00 & 1628.90 & -0.30 \\ 
+  PctHSEd & 0.02 & 0.00 & 0.03 & 18000.00 & 100.00 & 3252.90 & -0.90 \\ 
+  PctFemHH & 0.01 & -0.01 & 0.03 & 18000.00 & 100.00 & 2006.10 & 0.20 \\ 
+  nu2 & 0.01 & 0.00 & 0.06 & 18000.00 & 100.00 & 1599.50 & 0.70 \\ 
+  tau2 & 0.50 & 0.34 & 0.65 & 18000.00 & 100.00 & 3907.90 & -0.80 \\ 
+  rho & 0.81 & 0.61 & 0.94 & 18000.00 & 44.10 & 5196.60 & 0.90 \\ 
+   \hline
+\end{tabular}
+\caption{uninformative priors} 
+\end{table}
+
+
+\end{frame}
+
+\begin{frame}{Fitting a CAR (2)}
+% latex table generated in R 3.3.2 by xtable 1.8-2 package
+% Wed Mar 22 22:36:33 2017
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrrrr}
+  \hline
+ & Median & 2.5\% & 97.5\% & n.sample & \% accept & n.effective & Geweke.diag \\ 
+  \hline
+(Intercept) & -0.81 & -2.48 & 0.86 & 18000.00 & 100.00 & 11033.20 & 1.40 \\ 
+  PctWht & -0.01 & -0.02 & -0.01 & 18000.00 & 100.00 & 13600.70 & 0.20 \\ 
+  PctHisp & 0.01 & 0.01 & 0.02 & 18000.00 & 100.00 & 13780.40 & 0.30 \\ 
+  Gini & 4.03 & 2.12 & 5.93 & 18000.00 & 100.00 & 7508.30 & -2.00 \\ 
+  PctHSEd & 0.02 & 0.00 & 0.03 & 18000.00 & 100.00 & 15248.50 & -0.70 \\ 
+  PctFemHH & 0.01 & -0.01 & 0.03 & 18000.00 & 100.00 & 10575.60 & 1.30 \\ 
+  nu2 & 0.08 & 0.06 & 0.13 & 18000.00 & 100.00 & 10732.90 & -1.30 \\ 
+  tau2 & 0.25 & 0.16 & 0.38 & 18000.00 & 100.00 & 10628.20 & 2.70 \\ 
+  rho & 0.91 & 0.75 & 0.98 & 18000.00 & 43.80 & 10169.70 & 0.50 \\ 
+   \hline
+\end{tabular}
+\caption{weakly informative priors} 
+\end{table}
+
+\end{frame}
+
+\begin{frame}{Geographically Weighted Regression}
+\begin{itemize}
+\item A non-parametric method for inference with non-stationary spatial data
+\end{itemize}
+\end{frame}
 
 \begin{frame}{Workflow for Spatial Regression}
 \begin{itemize}
@@ -539,13 +606,12 @@ YES!
 \item Agricultural/industrial data (economic output)
 \item Conflict/Political Violence data (ex: ACLED)
 \item Anything with an address or lon/lat coordinates can be georeferenced
-\item
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Other tools}
 \begin{itemize}
-\item CAR Models
+%\item CAR Models
 \item Spatial/Spatio-temporal scan statistics
 \item Geographically Weighted Regression
 \item Kernel Density Estimation
@@ -565,7 +631,7 @@ YES!
 \end{frame}
 
 \begin{frame}{Acknowledgements}
-Thank you to Will Massengill and Drew Rosenberg for this opportunity, and to Elisabeth Root, whose code I drew heavily from
+Thank you to Jan Box-Steffensmeier for this opportunity, and to Elisabeth Root, whose code I drew heavily from.
 \end{frame}
 
 

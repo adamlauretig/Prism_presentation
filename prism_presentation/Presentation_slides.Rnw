@@ -646,13 +646,82 @@ YES!
 \begin{frame}{SAR vs. CAR}
 \begin{itemize}
 \item SAR: $$ y_i \sim N(0, (I-W)^{-1} D^{\sim} (I-W)'^{-1}) $$
- $$ \sigma_{SAR} = \sigma^{2} (I - W)^{-1} V_{\epsilon} (I - W')^{-1} $$
+ $$ \sum_{SAR} = \sigma^{2} (I - W)^{-1} V_{\epsilon} (I - W')^{-1} $$
 \item CAR: $$ y_i \sim N(0, (I-C)^{-1} D )$$
  $$ \sum_{CAR} = \sigma^{2} (I - C)^{-1} V_{C} $$
 \end{itemize}
 \end{frame}
 
 
+\begin{frame}{SAR vs. CAR}
+\begin{itemize}
+\item CAR only requires the variance to estimate, SAR requires the full variance-covariance matrix
+\item CAR is computationally less intensive
+\item CAR: local/first order dependency
+\item CAR: fit with MCMC -- can fit GLMs
+\item SAR: global/higher order dependency
+\item SAR: fit with MLE
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Fitting a CAR (1)}
+<<echo = FALSE, out.width='150px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE, results = 'asis'>>=
+suppressMessages(library(GISTools))
+suppressMessages(library(rgdal))
+suppressMessages(library(spdep))
+suppressMessages(library(sp))
+suppressMessages(library(spatstat))
+library(CARBayes) #version 4.7
+set.seed(614)
+
+file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+ny <- readOGR(dsn = file_path, layer = "NYAIDS", verbose=FALSE)
+ny <- ny[-c(38),]
+
+nygal <- poly2nb(ny) #Create the neighborhood object
+nyQ1.gal <- nb2listw(nygal, zero.policy=T) #Create the weights object
+lrate <- log1p(ny$Rate1000)
+w_mat <- nb2mat(nygal, zero.policy=T)
+w_mat <- ifelse(w_mat != 0, 1, 0)
+car1 <- S.CARleroux(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, "gaussian", data=ny@data, W = w_mat,  burnin=20000, n.sample=200000, thin=10, prior.nu2=NULL, prior.tau2=NULL, fix.rho=FALSE, rho=NULL, verbose=FALSE)
+
+xtable::xtable(car1$summary.results, caption = "uninformative priors")
+
+@
+
+\end{frame}
+
+\begin{frame}{Fitting a CAR (2)}
+<<echo = FALSE, out.width='150px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE, results = 'asis'>>=
+suppressMessages(library(GISTools))
+suppressMessages(library(rgdal))
+suppressMessages(library(spdep))
+suppressMessages(library(sp))
+suppressMessages(library(spatstat))
+library(CARBayes) #version 4.7
+set.seed(614)
+
+file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+ny <- readOGR(dsn = file_path, layer = "NYAIDS", verbose=FALSE)
+ny <- ny[-c(38),]
+
+nygal <- poly2nb(ny) #Create the neighborhood object
+nyQ1.gal <- nb2listw(nygal, zero.policy=T) #Create the weights object
+lrate <- log1p(ny$Rate1000)
+w_mat <- nb2mat(nygal, zero.policy=T)
+w_mat <- ifelse(w_mat != 0, 1, 0)
+
+car2 <- S.CARleroux(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, "gaussian", data=ny@data, W = w_mat,  burnin=20000, n.sample=200000, thin=10, prior.nu2=c(10, 1), prior.tau2=c(10, 1), fix.rho=FALSE, rho=NULL, verbose=FALSE)
+xtable::xtable(car2$summary.results, caption = "weakly informative priors")
+
+@
+\end{frame}
+
+\begin{frame}{Geographically Weighted Regression}
+\begin{itemize}
+\item A non-parametric method for inference with non-stationary spatial data
+\end{itemize}
+\end{frame}
 
 \begin{frame}{Workflow for Spatial Regression}
 \begin{itemize}
@@ -672,13 +741,12 @@ YES!
 \item Agricultural/industrial data (economic output)
 \item Conflict/Political Violence data (ex: ACLED)
 \item Anything with an address or lon/lat coordinates can be georeferenced
-\item
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Other tools}
 \begin{itemize}
-\item CAR Models
+%\item CAR Models
 \item Spatial/Spatio-temporal scan statistics
 \item Geographically Weighted Regression
 \item Kernel Density Estimation
@@ -698,7 +766,7 @@ YES!
 \end{frame}
 
 \begin{frame}{Acknowledgements}
-Thank you to Will Massengill and Drew Rosenberg for this opportunity, and to Elisabeth Root, whose code I drew heavily from
+Thank you to Jan Box-Steffensmeier for this opportunity, and to Elisabeth Root, whose code I drew heavily from.
 \end{frame}
 
 

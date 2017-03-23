@@ -13,3 +13,5 @@ MASS
 rgeos
 GISTools
 xtable
+Rcpp
+CARBayes

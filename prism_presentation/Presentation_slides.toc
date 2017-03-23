@@ -4,4 +4,4 @@
 \beamer@sectionintoc {4}{Spatial Autocorrelation}{18}{0}{3}
 \beamer@sectionintoc {5}{Regression}{41}{0}{4}
 \beamer@sectionintoc {6}{Spatial Regression}{56}{0}{5}
-\beamer@sectionintoc {7}{Discussion}{81}{0}{6}
+\beamer@sectionintoc {7}{Discussion}{90}{0}{6}

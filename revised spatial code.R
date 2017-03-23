@@ -22,7 +22,6 @@ summary(ny.lag.eig)
 w_mat <- nb2mat(nygal, zero.policy=T)
 w_mat <- ifelse(w_mat != 0, 1, 0)
 library(CARBayes) #version 4.7
-library(MCMCpack)
 set.seed(614)
 car1 <- S.CARleroux(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, "gaussian", 
             data=ny@data, W = w_mat,  burnin=20000, n.sample=100000, thin=10, 
