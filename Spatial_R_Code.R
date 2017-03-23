@@ -184,12 +184,6 @@ mtext("LISA Map AIDS Rate; weights: Q1", cex=1.2, side=3, line=1)
 legend("left", legend=labels, fill=colors, bty="n")
 
 ##############
-### Picking a Spatial Model
-##############
-
-lm.LMtests(reg1, nyQ1.gal, test=c("LMerr", "LMlag"))
-
-##############
 ### Spatial Regressions
 ##############
 
@@ -215,6 +209,79 @@ summary(ny.err.eig)
 # Yes!
 moran.test(ny.err.eig$resid, nyQ1.gal, alternative="two.sided", zero.policy=T)
 
+
+##############
+### Running a CAR model
+##############
+library(CARBayes)
+# CARBayes requires a different weight matrix structure
+w_mat <- nb2mat(nygal, zero.policy=T)
+
+# And the matrix has to be symmetric
+w_mat <- ifelse(w_mat != 0, 1, 0)
+
+set.seed(614) # for reproducible sampling
+
+# uninformative (default) priors
+car1 <- S.CARleroux(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, "gaussian", 
+                    data=ny@data, W = w_mat,  burnin=20000, n.sample=100000, thin=10, 
+                    prior.nu2=NULL, prior.tau2=NULL, fix.rho=FALSE, rho=NULL, 
+                    verbose=FALSE)
+# can't just type summary()
+car1$summary.results 
+
+
+# weakly informative priors -- note the larger number of effective samples
+car2 <- S.CARleroux(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, "gaussian", 
+                    data=ny@data, W = w_mat,  burnin=20000, n.sample=100000, thin=10, 
+                    prior.nu2=c(10, 1), prior.tau2=c(10, 1), fix.rho=FALSE, rho=NULL, 
+                    verbose=FALSE)
+# can't just type summary()
+car2$summary.results 
+
+##############
+### Running a GWR model
+##############
+
+library(GWmodel) # v. 2.0-2
+# Creating the distance matrix, which is different from the other two matrices
+dist_mat <- gw.dist(dp.locat = coordinates(ny), rp.locat =coordinates(ny), 
+  focus = 0, p = 2)
+
+# Calculating the kernel bandwidth
+bw1 <- bw.gwr(lrate ~ Gini, approach="aic",adaptive=TRUE, data=ny, 
+  kernel = "gaussian", dMat=dist_mat)
+
+# Running the GWR
+gw.model1 <- gwr.basic(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, 
+  bw = bw1, data = ny, kernel = "gaussian", adaptive = TRUE, p = 2, 
+  longlat = FALSE)
+
+# regression table output
+gw.model1
+
+# But plotting this would make more sense
+# Let's plot Gini, since that changed the most in the SAR/SEM vs. OLS models
+# SDF is a spatial dataframe which links data to spatial location
+# Gini is the variable
+ny$gw_out <- gw.model1$SDF$Gini
+
+# To get cutpoints
+quantile(ny$gw_out)
+
+# Color scheme to use
+shades_to_use <- shading(breaks = c(4.57, 6.33, 7.49), 
+  cols = brewer.pal(4, "Reds"))
+
+#plotting the map
+choropleth(sp = ny, v = ny$gw_out, border = "white", lwd = .25, shading = shades_to_use)
+#making the legend
+legend_colors <- shades_to_use$cols
+legend("left", legend = c("0-25", "25-50", "50-75", "75-100"), 
+  fill = legend_colors,bg="transparent", box.col = "transparent", border = "white",
+  title = "GWR Beta values for Gini, \nby quantile")
+
+
 ###############
 ### Other Useful packages
 ###############
@@ -232,5 +299,5 @@ install.packages("fields") # Curve, surface, and function fitting (Splines and K
 install.packages("geoR") # Useful for kriging
 install.packages("rgeos")# Useful for kriging
 
-install.packages("CARBayes") # Spatial CAR models
+install.packages("CARBayesST") # Spatio-temporal CAR models
 install.packages("McSpatial") # Frequentist approaches to Logit/GMM models
