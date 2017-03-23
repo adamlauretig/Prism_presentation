@@ -1,0 +1,717 @@
+\documentclass[aspectratio = 169, 12pt]{beamer}
+\let\Tiny=\tiny
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{amsmath, amsthm, amssymb, mathrsfs}
+\usepackage{epstopdf}
+\graphicspath{{./}{./eps/}}
+% these choices affect the slide layout (can be changed)
+  \usetheme{Montpellier}
+\useoutertheme{infolines}
+% modifying the color theme to be scarlet-and-grey for Ohio State (don't change)
+\usecolortheme{beaver}
+\setbeamercolor{block title}{bg=red!60!black}
+\setbeamercolor{block body}{bg=gray!10!white}
+\setbeamercolor{item projected}{bg=red!75!black}
+\setbeamercolor{subitem projected}{bg=red!90!black}
+\setbeamercolor{subsubitem projected}{bg=red!90!black}
+
+% set values for the title slide: [] = text here goes in footer
+%                                 {} = text here is on title slide
+% logo can have multiple graphics, if necessary
+\title[]{Spatial Data and Analysis in R}
+\subtitle[]{A PRISM Workshop}
+\author[]{Adam Lauretig}
+\institute[]{The Ohio State University}
+\date{}
+\logo{\includegraphics[height=0.4cm]{OSUlogo.eps}}
+
+\begin{document}
+
+\titlepage     % creates title slide with values defined in header
+
+\section*{Outline}     % starts 'outline' section (TOC, a single slide)
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\beamerdefaultoverlayspecification{<+->}
+
+\section{Introduction}     % each section (and subsection) title appears on TOC and at top/bottom of slide (theme-dependent)
+
+\begin{frame}{Why Are We Here?}     % frame title appears at top of slide
+\begin{itemize}
+\item Tobler's first law of geography:
+\item ``Everything is related to everything else, but near things are more related than distant things''
+\item We want to quantify how the spatial relationship between our observations affect our inferences
+\end{itemize}
+\end{frame}
+
+\begin{frame}{A Caveat}
+\begin{itemize}
+\item There are entire disciplines which study these issues (one of them is downstairs)
+\item I will be introducing \textit{spatial statistics} with a touch of \textit{GIS}
+\item I will not be discussing \textit{GIS} in depth, nor will I discuss remote sensing \textit{at all}
+\end{itemize}
+
+\end{frame}
+
+
+\section{Spatial Data Prep}
+\begin{frame}{What are Spatial Data?}
+\begin{itemize}
+\item Information (attributes) associated with a location
+\item Many kinds of spatial data: Points, Lines, Polygons, Raster data
+\item Today, we are working with polygon data
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}{Prepping our data}
+\begin{itemize}
+\item Spatial data come in \textit{shapefiles} which are really mini-databases
+\item ORDBMS - Linking spatial and attribute data
+\item Six parts, all combine to create a map to represent data
+\end{itemize}
+%\includegraphics[scale=0.2]{files_screenshot}
+\end{frame}
+
+\begin{frame}[fragile]{Loading Our data}
+<<echo = FALSE, out.width='250px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE>>=
+suppressMessages(library(rgdal))
+library(GISTools)
+file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+ny <- readOGR(dsn = file_path, 
+              layer = "NYAIDS", verbose=FALSE)
+#View(ny@data)
+plot(ny) # You should see a map of NYC
+@
+\end{frame}
+
+\begin{frame}[fragile]{Percent Black}
+<<echo = FALSE, out.width='250px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE>>=
+
+choropleth(ny, ny$PctBlk)
+@
+\end{frame}
+
+\begin{frame}[fragile]{AIDs Rate per 1000 people}
+<<echo = FALSE, out.width='250px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE>>=
+
+choropleth(ny, log1p(ny$Rate1000))
+@
+
+\end{frame}
+
+
+\section{Spatial Autocorrelation}
+\begin{frame}{Measuring Spatial Autocorrelation}
+\begin{itemize}
+\item What is spatial autocorrelation?
+\item Observations with more similar values tend to occur more closely together
+\item Most common test: Moran's I
+\end{itemize}
+\end{frame}
+
+I's formula is:
+\begin{frame}{Formula for Moran's I}
+\begin{equation*}
+I = \frac{n}{\sum_{i=1}^n \sum_{j=1}^n w_{ij}}
+\frac{\displaystyle\sum_{i=1}^n \sum_{j=1}^n w_{ij}(x_i - \bar{x})(x_j -
+  \bar{x})}{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2},\label{eq:morani}
+\end{equation*}
+where $w_{ij}$ is the weight between observation i and $j$
+\end{frame}
+
+\begin{frame}{The Weights Matrix $W$}
+\begin{itemize}
+\item In Moran's I, there was this thing $w_{ij}$
+\item This is the \textit{weights matrix}
+\item It allows us to measure the effect neighboring observations $j$ have on our observation of interest i
+\item Can be specified in a variety of ways, the simplest of which is binary ("contiguity"): $1$ if observations share a boundary, $0$ if they do not
+\item The default in $R$ is ``row standardized,'' where $w_{ij} = \frac{i}{\sum j}$
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Creating a weights matrix in $R$}
+<<eval = FALSE, out.width='250px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE>>=
+library(rgdal)
+library(spdep)
+library(sp)
+library(spatstat)
+file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+ny <- readOGR(dsn = file_path, 
+              layer = "NYAIDS", verbose=FALSE)
+nygal <- poly2nb(ny) #Create the neighborhood object
+nyQ1.gal <- nb2listw(nygal, zero.policy=T) #Create the weights object
+
+@
+\end{frame}
+
+\begin{frame}[fragile]{Running the Moran's I}
+<<echo = FALSE, out.width='250px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE, results='asis'>>=
+suppressMessages(library(rgdal))
+suppressMessages(library(spdep))
+suppressMessages(library(sp))
+suppressMessages(library(spatstat))
+file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+ny <- readOGR(dsn = file_path, 
+              layer = "NYAIDS", verbose=FALSE)
+nygal <- poly2nb(ny) 
+nyQ1.gal <- nb2listw(nygal, zero.policy=T)
+#moran.test(log1p(ny$Rate1000), nyQ1.gal, alternative="two.sided", zero.policy=T)
+
+morans_i_output_orig <- moran.test(log1p(ny$Rate1000), nyQ1.gal, alternative="two.sided", zero.policy=T)
+morans_i_o <- t(rbind(as.matrix(morans_i_output_orig$estimate), morans_i_output_orig$p.value))
+colnames(morans_i_o)[4] <- "p-value"
+print(xtable(morans_i_o, label = "tab:moranresid"), include.rownames = FALSE)
+
+@
+\end{frame}
+
+\begin{frame}{Where are these clusters?}
+\begin{itemize}
+\item We can calculate this using a \textit{Local Indicator of Spatial Autocorrelation} (LISA)
+\item Measure how similar a value is compared to neighboring values
+\item While the Moran's I detects clustering, the LISA detects \textit{clusters}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Where are these clusters?}
+<<echo = FALSE, out.width='200px', dpi=500, cache = TRUE, message=FALSE, warning=FALSE>>=
+suppressMessages(library(rgdal))
+suppressMessages(library(spdep))
+suppressMessages(library(sp))
+suppressMessages(library(spatstat))
+file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+ny <- readOGR(dsn = file_path, 
+              layer = "NYAIDS", verbose=FALSE)
+nygal <- poly2nb(ny) #Create the neighborhood object
+nyQ1.gal <- nb2listw(nygal, zero.policy=T)
+
+
+locm <- localmoran(log1p(ny$Rate1000), nyQ1.gal, zero.policy=T, alternative="two.sided")
+Scrate <- (log1p(ny$Rate1000) - mean(log1p(ny$Rate1000)))/sd(log1p(ny$Rate1000))
+lagScrate <- lag.listw(nyQ1.gal, Scrate, zero.policy=T)
+
+
+plot(Scrate, lagScrate, col="purple", xlab="AIDS Rate z-score", 
+     ylab="Lagged AIDS Rate z-score", main="Moran Scatterplot AIDS Rate",
+     xlim=c(-5,5), ylim=c(-3,3), pch = 20)
+abline(h=0, v=0)
+abline(lm(lagScrate ~ Scrate), lty=2, lwd=2, col="blue")
+
+@
+\end{frame}
+
+\begin{frame}[fragile]{Where are these clusters?}
+<<echo = FALSE, out.width='250px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE>>=
+suppressMessages(library(rgdal))
+suppressMessages(library(spdep))
+suppressMessages(library(sp))
+suppressMessages(library(spatstat))
+file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+ny <- readOGR(dsn = file_path, 
+              layer = "NYAIDS", verbose=FALSE)
+nygal <- poly2nb(ny) #Create the neighborhood object
+nyQ1.gal <- nb2listw(nygal, zero.policy=T)
+
+
+locm <- localmoran(log1p(ny$Rate1000), nyQ1.gal, zero.policy=T, alternative="two.sided")
+Scrate <- (log1p(ny$Rate1000) - mean(log1p(ny$Rate1000)))/sd(log1p(ny$Rate1000))
+lagScrate <- lag.listw(nyQ1.gal, Scrate, zero.policy=T)
+
+
+
+ny$hh <- (Scrate>= 0 & lagScrate>= 0) & (locm[,5]<= 0.05)
+ny$ll <- (Scrate<= 0 & lagScrate<= 0) & (locm[,5]<= 0.05)
+ny$hl <- (Scrate>= 0 & lagScrate<= 0) & (locm[,5]<= 0.05)
+ny$lh <- (Scrate<= 0 & lagScrate>= 0) & (locm[,5]<= 0.05)
+ny$ns <- locm[,5]> 0.05
+
+# Create a single categorial variable summing up the
+# five logical variables
+
+ny$var <- 0
+ny$var <- replace(ny$var, (ny$hh==TRUE), 1)
+ny$var <- replace(ny$var, (ny$ll==TRUE), 2)
+ny$var <- replace(ny$var, (ny$hl==TRUE), 3)
+ny$var <- replace(ny$var, (ny$lh==TRUE), 4)
+ny$var <- replace(ny$var, (ny$ns==TRUE), 5)
+
+# Set the breaks for the thematic map classes
+
+breaks <-seq(1,5,1)
+
+# Set the corresponding labels for the thematic map classes
+
+labels <- c("High-High", "Low-Low", "High-Low", "Low-High", "Not Signif.")
+
+# Determine which map class each observation falls into based on
+# the value of ny$var
+
+np <- findInterval(ny$var, breaks, all.inside=FALSE)
+
+# Assign colors to each map class
+
+colors <- c("red", "blue", "pink", "skyblue2", "gray90")
+
+# Plot the SpatialPolygonsDataFrame using specified breaks
+# and color scheme
+
+plot(ny, col=colors[np], border = "white", lwd = .25)
+mtext("LISA Map AIDS Rate; weights: Q1", cex=1.2, side=3, line=1)
+legend("left", legend=labels, fill=colors, bty="n")
+@
+\end{frame}
+
+\begin{frame}{What About Regression with Spatial Data?}
+\begin{itemize}
+\item Remember, a key regression assumption is that our observations are IID
+\item If there is spatial autocorrelation in our data, we have fewer independent data points than we initially supposed
+\item This shrinks our standard errors, making variables appear significant
+\item Once we adjust our variance-covariance matrix, previously significant covariates might lose their significance 
+\item Addtionally, with spatial autocorrelation, our coefficients may be biased 
+\item Two ways of handling this: Spatial Error Models, and Spatial Autoregressive models
+\end{itemize}
+\end{frame}
+
+\section{Regression}
+
+\begin{frame}{The Math: Spatial Error Model}
+\begin{itemize}
+\item Normally: $y_i = x_{i}\beta + e_i$, where $e = I(Y- X\beta)$
+\item But, we want to model spatial dependence in the residuals
+\item $e_{i} = \sum_{j=1}^n w_{ij} + e_{j} + \varepsilon_{i}$, where $w_{ii} = 0$
+\item Basically, we regress the error $e_i$ on the surrounding errors
+\item We wind up with $e = (I-W)(Y- X\beta)$
+\item $\varepsilon$ is the residual of residuals, with $\sum_{\varepsilon} = \sigma^{2}I$
+\item The full model: $y_{i} = x_{i}\beta + \sum_{j=1}^{n} w_{ij}e_{j} + \varepsilon_{i}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{The Math: Spatial Autoregressive Model}
+\begin{itemize}
+\item Option 2: the Spatial autoregressive model
+\item Instead of lagging the error term, lag $y$, the DV
+\item $y_{i} = x_{i}\beta + \sum_{j=1}^{n} w_{ij}y_{j} + \varepsilon_{i}$
+\item SAR vs. SEM
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Plain OLS}
+<<echo = FALSE, out.width='250px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE, results = 'asis'>>=
+suppressMessages(library(rgdal))
+suppressMessages(library(spdep))
+suppressMessages(library(sp))
+suppressMessages(library(spatstat))
+file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+ny <- readOGR(dsn = file_path, 
+              layer = "NYAIDS", verbose=FALSE)
+ny <- ny[-c(38),]
+nygal <- poly2nb(ny) #Create the neighborhood object
+nyQ1.gal <- nb2listw(nygal, zero.policy=T)
+
+lrate <- log1p(ny$Rate1000)
+
+reg1 <- lm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, data = ny)
+texreg::texreg(l = list(reg1), scalebox = .5)
+
+@
+\end{frame}
+
+\begin{frame}[fragile]{Did we model out our autocorrelation?}
+<<echo = FALSE, out.width='150px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE>>=
+suppressMessages(library(rgdal))
+suppressMessages(library(spdep))
+suppressMessages(library(sp))
+suppressMessages(library(spatstat))
+file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+ny <- readOGR(dsn = file_path, 
+              layer = "NYAIDS", verbose=FALSE)
+ny <- ny[-c(38),]
+nygal <- poly2nb(ny) #Create the neighborhood object
+nyQ1.gal <- nb2listw(nygal, zero.policy=T)
+lrate <- log1p(ny$Rate1000)
+reg1 <- lm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, data = ny)
+yhat <- reg1$fitted.values
+
+plot(yhat, lrate, xlab="Fitted y", ylab= "Residuals",
+     main="Plot of Residuals against Fitted y")
+lines(lowess(lrate ~ yhat), lwd=2, col=4)
+abline(lm(lrate ~ yhat), lwd=2, col=2)
+@
+\end{frame}
+
+\begin{frame}[fragile]{Did we model out our spatial autocorrelation?}
+<<echo = FALSE, out.width='150px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE, results = 'asis'>>=
+suppressMessages(library(rgdal))
+suppressMessages(library(spdep))
+suppressMessages(library(sp))
+suppressMessages(library(spatstat))
+library(xtable)
+file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+ny <- readOGR(dsn = file_path, 
+              layer = "NYAIDS", verbose=FALSE)
+ny <- ny[-c(38),]
+nygal <- poly2nb(ny) #Create the neighborhood object
+nyQ1.gal <- nb2listw(nygal, zero.policy=T)
+lrate <- log1p(ny$Rate1000)
+reg1 <- lm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, data = ny)
+ny$resid <- reg1$fitted.values
+
+morans_i_output_r <- moran.test(ny$resid, nyQ1.gal, alternative="two.sided", zero.policy=T)
+morans_i_r <- t(rbind(as.matrix(morans_i_output_r$estimate), morans_i_output_r$p.value))
+colnames(morans_i_r)[4] <- "p-value"
+print(xtable(morans_i_r, label = "tab:moranresid"), include.rownames = FALSE)
+@
+No!  This statistic didn't change much from before we ran our regression: $.68$ vs $.63$
+\end{frame}
+
+\begin{frame}[fragile]{Where is the residual autocorrelation?}
+<<echo = FALSE, out.width='150px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE>>=
+suppressMessages(library(rgdal))
+suppressMessages(library(spdep))
+suppressMessages(library(sp))
+suppressMessages(library(spatstat))
+file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+ny <- readOGR(dsn = file_path, 
+              layer = "NYAIDS", verbose=FALSE)
+ny <- ny[-c(38),]
+nygal <- poly2nb(ny) #Create the neighborhood object
+nyQ1.gal <- nb2listw(nygal, zero.policy=T)
+lrate <- log1p(ny$Rate1000)
+reg1 <- lm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, data = ny)
+ny$resid <- reg1$fitted.values
+
+
+locm <- localmoran(ny$resid, nyQ1.gal, zero.policy=T, alternative="two.sided")
+Scrate <- (ny$resid - mean(ny$resid))/sd(ny$resid)
+lagScrate <- lag.listw(nyQ1.gal, Scrate, zero.policy=T)
+
+
+ny$hh <- (Scrate>= 0 & lagScrate>= 0) & (locm[,5]<= 0.05)
+ny$ll <- (Scrate<= 0 & lagScrate<= 0) & (locm[,5]<= 0.05)
+ny$hl <- (Scrate>= 0 & lagScrate<= 0) & (locm[,5]<= 0.05)
+ny$lh <- (Scrate<= 0 & lagScrate>= 0) & (locm[,5]<= 0.05)
+ny$ns <- locm[,5]> 0.05
+
+# Create a single categorial variable summing up the
+# five logical variables
+
+ny$var <- 0
+ny$var <- replace(ny$var, (ny$hh==TRUE), 1)
+ny$var <- replace(ny$var, (ny$ll==TRUE), 2)
+ny$var <- replace(ny$var, (ny$hl==TRUE), 3)
+ny$var <- replace(ny$var, (ny$lh==TRUE), 4)
+ny$var <- replace(ny$var, (ny$ns==TRUE), 5)
+
+# Set the breaks for the thematic map classes
+
+breaks <-seq(1,5,1)
+
+# Set the corresponding labels for the thematic map classes
+
+labels <- c("High-High", "Low-Low", "High-Low", "Low-High", "Not Signif.")
+
+# Determine which map class each observation falls into based on
+# the value of ny$var
+
+np <- findInterval(ny$var, breaks, all.inside=FALSE)
+
+# Assign colors to each map class
+
+colors <- c("red", "blue", "pink", "skyblue2", "gray90")
+
+# Plot the SpatialPolygonsDataFrame using specified breaks
+# and color scheme
+
+plot(ny, col=colors[np], border="white", lwd = .25)
+mtext("LISA Map AIDS Rate; weights: Q1", cex=1.2, side=3, line=1)
+legend("left", legend=labels, fill=colors, bty="n")
+
+@
+\end{frame}
+
+\section{Spatial Regression}
+% \begin{frame}[fragile]{Picking a model}
+% <<echo = FALSE, out.width='150px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE>>=
+% suppressMessages(library(rgdal))
+% suppressMessages(library(spdep))
+% suppressMessages(library(sp))
+% suppressMessages(library(spatstat))
+% file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+% ny <- readOGR(dsn = file_path, 
+%               layer = "NYAIDS", verbose=FALSE)
+% ny <- ny[-c(38),]
+% nygal <- poly2nb(ny) #Create the neighborhood object
+% nyQ1.gal <- nb2listw(nygal, zero.policy=T)
+% lrate <- log1p(ny$Rate1000)
+% reg1 <- lm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, data = ny)
+% 
+% # Lagrange multiplier test for model fit
+% lmtest_out <- lm.LMtests(reg1, nyQ1.gal, test=c("LMerr", "LMlag"))
+% texreg::texreg(l = list(lm.LMtests(reg1, nyQ1.gal, test=c("LMerr", "LMlag"))))
+% 
+% @
+% \end{frame}
+\begin{frame}{Can we Model this Spatial Autocorrelation}
+\begin{itemize}
+\item One option is to use fixed effects
+\item But this removes something interesting -- the spatial relationship
+\item Another option is to explicitly model the spatial relationship
+\end{itemize}
+\end{frame}
+\begin{frame}[fragile]{Spatial Autoregressive Model}
+<<echo = FALSE, out.width='150px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE, results = 'asis'>>=
+suppressMessages(library(rgdal))
+suppressMessages(library(spdep))
+suppressMessages(library(sp))
+suppressMessages(library(spatstat))
+file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+ny <- readOGR(dsn = file_path, 
+              layer = "NYAIDS", verbose=FALSE)
+ny <- ny[-c(38),]
+nygal <- poly2nb(ny) #Create the neighborhood object
+nyQ1.gal <- nb2listw(nygal, zero.policy=T)
+lrate <- log1p(ny$Rate1000)
+reg1 <- lm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, data = ny)
+
+W.eig <- eigenw(nyQ1.gal, quiet=NULL)
+
+
+ny.lag.eig <- lagsarlm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH,
+	data=ny, nyQ1.gal, method="eigen", quiet=TRUE, control=(pre_eig=W.eig)) # How to use pre-calculated eigenvalues
+#summary(ny.lag.eig)
+
+texreg::texreg(l = list(ny.lag.eig), scalebox = 0.5)
+
+
+@
+\end{frame}
+
+\begin{frame}[fragile]{Spatial Error Model}
+<<echo = FALSE, out.width='150px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE, results = 'asis'>>=
+suppressMessages(library(rgdal))
+suppressMessages(library(spdep))
+suppressMessages(library(sp))
+suppressMessages(library(spatstat))
+file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+ny <- readOGR(dsn = file_path, 
+              layer = "NYAIDS", verbose=FALSE)
+ny <- ny[-c(38),]
+nygal <- poly2nb(ny) #Create the neighborhood object
+nyQ1.gal <- nb2listw(nygal, zero.policy=T)
+lrate <- log1p(ny$Rate1000)
+reg1 <- lm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, data = ny)
+
+W.eig <- eigenw(nyQ1.gal, quiet=NULL)
+
+
+ny.err.eig <- errorsarlm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH,
+                         data=ny, nyQ1.gal, method="eigen", quiet=TRUE)
+#summary(ny.err.eig)
+
+texreg::texreg(l = list(ny.err.eig), scalebox = 0.5)
+@
+\end{frame}
+
+\begin{frame}[fragile]{Comparing Findings - OLS}
+<<echo = FALSE, out.width='200px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE>>=
+suppressMessages(library(rgdal))
+suppressMessages(library(spdep))
+suppressMessages(library(sp))
+suppressMessages(library(spatstat))
+file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+ny <- readOGR(dsn = file_path, 
+              layer = "NYAIDS", verbose=FALSE)
+ny <- ny[-c(38),]
+nygal <- poly2nb(ny) #Create the neighborhood object
+nyQ1.gal <- nb2listw(nygal, zero.policy=T)
+
+lrate <- log1p(ny$Rate1000)
+
+reg1 <- lm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, data = ny)
+
+W.eig <- eigenw(nyQ1.gal, quiet=NULL)
+
+
+ny.lag.eig <- lagsarlm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH,
+	data=ny, nyQ1.gal, method="eigen", quiet=TRUE, control=(pre_eig=W.eig)) 
+
+
+ny.err.eig <- errorsarlm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH,
+                         data=ny, nyQ1.gal, method="eigen", quiet=TRUE)
+
+reg_1_coef <- cbind(1, seq(1, 6, 1), reg1$coefficients, confint(reg1))
+
+ci_lag <- confint(ny.lag.eig)
+ny.lag.eig_coef <- cbind(2, seq(1, 6, 1), (ny.lag.eig$coefficients), ci_lag[2:7,])
+ny.lag.eig_coef[, 2] <- (ny.lag.eig_coef[, 2]) - .3
+
+ci_err <- confint(ny.err.eig)
+ny.err.eig_coef <- cbind(3, seq(1, 6, 1), (ny.err.eig$coefficients), ci_lag[2:7,])
+ny.err.eig_coef[, 2] <- (ny.err.eig_coef[, 2]) - .15
+
+coef_plot_data <- data.frame(rbind(reg_1_coef, ny.lag.eig_coef, ny.err.eig_coef))
+names(coef_plot_data) <- c("model", "y_vals", "x_vals", "xlo", "xhi")
+
+plot(reg_1_coef[, 3], reg_1_coef[, 2], pch = 20, xlim = c(-2, 10), ylim = c(0, 6), cex = 0.25, axes = FALSE, ann = FALSE)
+segments(reg_1_coef[, 4], reg_1_coef[, 2], reg_1_coef[, 5], reg_1_coef[, 2], lwd = 1.5)
+points(ny.lag.eig_coef[, 3], ny.lag.eig_coef[, 2], pch = 20, cex = .25, col = "red")
+segments(ny.lag.eig_coef[, 4], ny.lag.eig_coef[, 2], ny.lag.eig_coef[, 5], ny.lag.eig_coef[, 2], lwd = 1.5, col = "red")
+points(ny.err.eig_coef[, 3], ny.err.eig_coef[, 2], pch = 20, cex = .25, col = "blue")
+segments(ny.err.eig_coef[, 4], ny.err.eig_coef[, 2], ny.err.eig_coef[, 5], ny.err.eig_coef[, 2], lwd = 1.5, col = "blue")
+
+abline(v = 0, lty = 1, lwd = 0.6, col="gray90") # adds vertical line at x = 0 (why is this helpful?)
+
+box(which = "plot", lty = "solid", col = "gray80")
+
+title(main = "Comparing Regression Results",
+      ylab = "",
+      xlab = "")
+title(sub = "Coefficient estimates and 95% C.I. shown",
+      cex.sub = 0.6, line = 2)
+axis (1, at = c(-2:10), mgp = c(2, 0.5, 0), tck = -.02, cex.axis = 0.8, col = "gray60")
+axis (2, at = c(1:6), tick = FALSE, 
+      labels = names(reg1$coefficients), 
+      las = 1, cex.axis = 0.6, col = "gray19")
+legend("bottomleft", c("OLS", "SAR", "SEM"), pch = 19, col = c("black", "blue", "red"), cex = 0.6, border = "gray19")
+
+@
+\end{frame}
+
+\begin{frame}[fragile]{Did These Resolve our Spatial Autocorrelation?}
+<<echo = FALSE, out.width='150px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE, results = 'asis'>>=
+suppressMessages(library(rgdal))
+suppressMessages(library(spdep))
+suppressMessages(library(sp))
+suppressMessages(library(spatstat))
+file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+ny <- readOGR(dsn = file_path, 
+              layer = "NYAIDS", verbose=FALSE)
+ny <- ny[-c(38),]
+nygal <- poly2nb(ny) #Create the neighborhood object
+nyQ1.gal <- nb2listw(nygal, zero.policy=T)
+
+lrate <- log1p(ny$Rate1000)
+
+reg1 <- lm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, data = ny)
+
+W.eig <- eigenw(nyQ1.gal, quiet=NULL)
+
+
+ny.lag.eig <- lagsarlm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH,
+	data=ny, nyQ1.gal, method="eigen", quiet=TRUE, control=(pre_eig=W.eig)) 
+
+
+ny.err.eig <- errorsarlm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH,
+                         data=ny, nyQ1.gal, method="eigen", quiet=TRUE)
+
+morans_i_output_final <- moran.test(ny.err.eig$resid, nyQ1.gal, alternative="two.sided", zero.policy=T)
+morans_i_r_f <- t(rbind(as.matrix(morans_i_output_final$estimate), morans_i_output_final$p.value))
+colnames(morans_i_r_f)[4] <- "p-value"
+print(xtable(morans_i_r_f, label = "tab:moranresid2"), include.rownames = FALSE)
+
+@
+YES!
+\end{frame}
+
+\begin{frame}{Conditional Autoregressive Model (CAR)}
+\begin{itemize}
+\item Model the spatial relationship according to a Markov Random Field (MRF)
+\item Each observation depends only on values at neighboring locations, not glocal values
+\item Written out:
+\item $c_{ij}$ is the weight matrix
+\item $$ E(y_i | y_{-i}) = x_i \beta + \sum_{j=1}^n + c_{ij} [ y_j - x_i \beta ] $$
+\item $$ \text{var}(y_i | y_{-i}) = \sigma_{i}^2 $$
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Conditional Autoregressive Model (CAR) (cont'd)}
+\begin{itemize}
+\item This defines a joint multivariate normal distribution with variance
+\item $$ \sum_Y = (I - C)^{-1} \sum_{C} $$
+\item $$ \sum_{CAR} = \sigma^{2} (I - C)^{-1} V_{C} $$
+\item $$ = \sigma^{2}V_{CAR} $$
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{SAR vs. CAR}
+\begin{itemize}
+\item SAR: $$ y_i \sim N(0, (I-W)^{-1} D^{\sim} (I-W)'^{-1}) $$
+ $$ \sigma_{SAR} = \sigma^{2} (I - W)^{-1} V_{\epsilon} (I - W')^{-1} $$
+\item CAR: $$ y_i \sim N(0, (I-C)^{-1} D )$$
+ $$ \sum_{CAR} = \sigma^{2} (I - C)^{-1} V_{C} $$
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Workflow for Spatial Regression}
+\begin{itemize}
+\item In addition to normal EDA, do some ESDA (Exploratory Spatial Data Analysis), mapping out variables
+\item Check for spatial autocorrelation
+\item Run your normal regression, with the variables you think are necessary
+\item Check once more for spatial autocorrelation, in your residuals
+\item If there's still autocorrelation, run a spatial model
+\item One final check for autocorrelation in your residuals
+\end{itemize}
+\end{frame}
+
+\section{Discussion}
+\begin{frame}{Where Can we Apply These Methods in Political Science}
+\begin{itemize}
+\item Voting and Political Behavior patterns (Data available at the Census Tract level (or less))
+\item Agricultural/industrial data (economic output)
+\item Conflict/Political Violence data (ex: ACLED)
+\item Anything with an address or lon/lat coordinates can be georeferenced
+\item
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Other tools}
+\begin{itemize}
+\item CAR Models
+\item Spatial/Spatio-temporal scan statistics
+\item Geographically Weighted Regression
+\item Kernel Density Estimation
+\item Kriging/Geostatistics
+\item Spatio-temporal approaches
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Resources}
+\begin{itemize}
+\item Yuri Zhukov's Spatial Workshop: \url{http://www.people.fas.harvard.edu/~zhukov/spatial.html}
+\item Brunsdon, Chris, and Lex Comber. \textit{An introduction to R for spatial analysis \& mapping.} Sage, 2015.
+\item Bivand, Roger S., and Edzer J. Pebesma. \textit{Applied Spatial Data Analysis with R.} Springer, 2013.
+\item Waller, Lance A., and Carol A. Gotway. \textit{Applied spatial statistics for public health data.} John Wiley \& Sons, 2004.
+\item Cressie, Noel. \textit{Statistics for spatial data.} John Wiley \& Sons, 1993.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Acknowledgements}
+Thank you to Will Massengill and Drew Rosenberg for this opportunity, and to Elisabeth Root, whose code I drew heavily from
+\end{frame}
+
+
+\section*{References}     % use '*' on section/subsection to keep it off TOC
+
+\begin{frame}{References}
+
+\end{frame}
+
+\section*{Appendix}     % extra slides in appendix, but these sections/subsections shouldn't be in TOC (use '*')
+\subsection*{}
+
+\begin{frame}{}
+\end{frame}
+
+\end{document}

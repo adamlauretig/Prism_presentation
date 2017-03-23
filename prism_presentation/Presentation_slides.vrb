@@ -1,0 +1,14 @@
+\frametitle{Did These Resolve our Spatial Autocorrelation?}
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrr}
+  \hline
+Moran I statistic & Expectation & Variance & p-value \\
+  \hline
+-0.10 & -0.01 & 0.00 & 0.08 \\
+   \hline
+\end{tabular}
+\label{tab:moranresid2}
+\end{table}
+
+YES!
