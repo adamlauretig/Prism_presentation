@@ -1,7 +1,7 @@
 #####################################
 # Workshop on Spatial Statistics in R
 # Adam Lauretig
-# March 1, 2016
+# March 24, 2017
 #####################################
 
 rm(list = ls())
@@ -10,7 +10,7 @@ options(stringsAsFactors = FALSE)
 # This is the basic package for working with spatial data in R
 install.packages("sp")
 
-# This is a package from Brunsdon & Comber's book, and good for quick visualizations 
+# This is a package from Brunsdon & Comber's book, good for quick visualizations 
 install.packages("GISTools")  
 
 # This is the package for loading shapefiles
@@ -22,6 +22,13 @@ install.packages("spdep")
 # This is the package for basic spatial stats
 install.packages("spatstat")
 
+# This is the package for Conditional Autoregressive models
+install.packages("CARBayes")
+
+# This is the package for Geographically Weighted Regression models
+install.packages("GWmodel")
+
+
 #####################################
 library(sp)
 library(spdep)
@@ -32,7 +39,7 @@ library(GISTools)
 #############
 # Unfortunately, we can't use the "~" here (readOGR doesn't like it)
 # You'll need to change this for your computer, replace
-file_path <- "/Users/adamlauretig/data/prism_presentation/NYAIDS_data"
+file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 #############
 
 # Loading the shapefile
