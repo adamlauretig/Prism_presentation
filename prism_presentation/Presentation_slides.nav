@@ -102,23 +102,12 @@
 \headcommand {\beamer@framepages {98}{101}}
 \headcommand {\slideentry {7}{0}{2}{102/105}{}{0}}
 \headcommand {\beamer@framepages {102}{105}}
-\headcommand {\slideentry {7}{0}{3}{106/110}{}{0}}
-\headcommand {\beamer@framepages {106}{110}}
-\headcommand {\slideentry {7}{0}{4}{111/111}{}{0}}
-\headcommand {\beamer@framepages {111}{111}}
-\headcommand {\sectionentry {8}{References}{112}{References}{0}}
-\headcommand {\beamer@sectionpages {98}{111}}
-\headcommand {\beamer@subsectionpages {98}{111}}
-\headcommand {\slideentry {8}{0}{1}{112/112}{}{0}}
+\headcommand {\slideentry {7}{0}{3}{106/111}{}{0}}
+\headcommand {\beamer@framepages {106}{111}}
+\headcommand {\slideentry {7}{0}{4}{112/112}{}{0}}
 \headcommand {\beamer@framepages {112}{112}}
-\headcommand {\sectionentry {9}{Appendix}{113}{Appendix}{0}}
-\headcommand {\beamer@sectionpages {112}{112}}
-\headcommand {\beamer@subsectionpages {112}{112}}
-\headcommand {\beamer@subsectionentry {0}{9}{1}{113}{}}\headcommand {\beamer@subsectionpages {113}{112}}
-\headcommand {\slideentry {9}{1}{1}{113/113}{}{0}}
-\headcommand {\beamer@framepages {113}{113}}
-\headcommand {\beamer@partpages {1}{113}}
-\headcommand {\beamer@subsectionpages {113}{113}}
-\headcommand {\beamer@sectionpages {113}{113}}
-\headcommand {\beamer@documentpages {113}}
-\headcommand {\def \inserttotalframenumber {45}}
+\headcommand {\beamer@partpages {1}{112}}
+\headcommand {\beamer@subsectionpages {98}{112}}
+\headcommand {\beamer@sectionpages {98}{112}}
+\headcommand {\beamer@documentpages {112}}
+\headcommand {\def \inserttotalframenumber {43}}
