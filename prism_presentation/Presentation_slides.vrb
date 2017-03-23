@@ -1,14 +1,9 @@
-\frametitle{Did These Resolve our Spatial Autocorrelation?}
-\begin{table}[ht]
-\centering
-\begin{tabular}{rrrr}
-  \hline
-Moran I statistic & Expectation & Variance & p-value \\
-  \hline
--0.10 & -0.01 & 0.00 & 0.08 \\
-   \hline
-\end{tabular}
-\label{tab:moranresid2}
-\end{table}
+\frametitle{Fitting a Geographically Weighted Regression}
+\begin{itemize}
+\item Usually, we represent the results from a GWR visually
+\end{itemize}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=200px]{figure/unnamed-chunk-18-1}
 
-YES!
+\end{knitrout}

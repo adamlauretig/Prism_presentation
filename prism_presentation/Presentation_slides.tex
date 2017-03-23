@@ -126,7 +126,7 @@
 \item ORDBMS - Linking spatial and attribute data
 \item Six parts, all combine to create a map to represent data
 \end{itemize}
-%\includegraphics[scale=0.2]{files_screenshot}
+\includegraphics[scale=0.2]{files_screenshot}
 \end{frame}
 
 \begin{frame}[fragile]{Loading Our data}
@@ -164,7 +164,6 @@
 \end{itemize}
 \end{frame}
 
-I's formula is:
 \begin{frame}{Formula for Moran's I}
 \begin{equation*}
 I = \frac{n}{\sum_{i=1}^n \sum_{j=1}^n w_{ij}}
@@ -193,7 +192,7 @@ where $w_{ij}$ is the weight between observation i and $j$
 \hlkwd{library}\hlstd{(spdep)}
 \hlkwd{library}\hlstd{(sp)}
 \hlkwd{library}\hlstd{(spatstat)}
-\hlstd{file_path} \hlkwb{<-} \hlstr{"/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"}
+\hlstd{file_path} \hlkwb{<-} \hlstr{"/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"}
 \hlstd{ny} \hlkwb{<-} \hlkwd{readOGR}\hlstd{(}\hlkwc{dsn} \hlstd{= file_path,}
               \hlkwc{layer} \hlstd{=} \hlstr{"NYAIDS"}\hlstd{,} \hlkwc{verbose}\hlstd{=}\hlnum{FALSE}\hlstd{)}
 \hlstd{nygal} \hlkwb{<-} \hlkwd{poly2nb}\hlstd{(ny)} \hlcom{#Create the neighborhood object}
@@ -205,7 +204,7 @@ where $w_{ij}$ is the weight between observation i and $j$
 
 \begin{frame}[fragile]{Running the Moran's I}
 % latex table generated in R 3.3.2 by xtable 1.8-2 package
-% Wed Mar 22 18:02:10 2017
+% Thu Mar 23 17:12:00 2017
 \begin{table}[ht]
 \centering
 \begin{tabular}{rrrr}
@@ -325,7 +324,7 @@ RMSE        & 0.54          \\
 
 \begin{frame}[fragile]{Did we model out our spatial autocorrelation?}
 % latex table generated in R 3.3.2 by xtable 1.8-2 package
-% Wed Mar 22 18:02:11 2017
+% Thu Mar 23 17:12:04 2017
 \begin{table}[ht]
 \centering
 \begin{tabular}{rrrr}
@@ -356,7 +355,7 @@ No!  This statistic didn't change much from before we ran our regression: $.68$ 
 % suppressMessages(library(spdep))
 % suppressMessages(library(sp))
 % suppressMessages(library(spatstat))
-% file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+% file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 % ny <- readOGR(dsn = file_path, 
 %               layer = "NYAIDS", verbose=FALSE)
 % ny <- ny[-c(38),]
@@ -371,7 +370,7 @@ No!  This statistic didn't change much from before we ran our regression: $.68$ 
 % 
 % @
 % \end{frame}
-\begin{frame}{Can we Model this Spatial Autocorrelation}
+\begin{frame}{Can we Model this Spatial Autocorrelation?}
 \begin{itemize}
 \item One option is to use fixed effects
 \item But this removes something interesting -- the spatial relationship
@@ -413,7 +412,7 @@ LR test: p-value    & 0.00          \\
 \multicolumn{2}{l}{\scriptsize{$^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$}}
 \end{tabular}
 }
-\caption{Statistical models}
+\caption{SAR Model output}
 \label{table:coefficients}
 \end{center}
 \end{table}
@@ -455,7 +454,7 @@ LR test: p-value    & 0.00         \\
 \multicolumn{2}{l}{\scriptsize{$^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$}}
 \end{tabular}
 }
-\caption{Statistical models}
+\caption{SEM model output}
 \label{table:coefficients}
 \end{center}
 \end{table}
@@ -472,7 +471,7 @@ LR test: p-value    & 0.00         \\
 
 \begin{frame}[fragile]{Did These Resolve our Spatial Autocorrelation?}
 % latex table generated in R 3.3.2 by xtable 1.8-2 package
-% Wed Mar 22 18:14:10 2017
+% Thu Mar 23 17:12:09 2017
 \begin{table}[ht]
 \centering
 \begin{tabular}{rrrr}
@@ -503,8 +502,8 @@ YES!
 \begin{frame}{Conditional Autoregressive Model (CAR) (cont'd)}
 \begin{itemize}
 \item This defines a joint multivariate normal distribution with variance
-\item $$ \sum_Y = (I - C)^{-1} \sum_{C} $$
-\item $$ \sum_{CAR} = \sigma^{2} (I - C)^{-1} V_{C} $$
+\item $$ \Sigma_Y = (I - C)^{-1} \sum_{C} $$
+\item $$ \Sigma_{CAR} = \sigma^{2} (I - C)^{-1} V_{C} $$
 \item $$ = \sigma^{2}V_{CAR} $$
 \end{itemize}
 \end{frame}
@@ -513,9 +512,9 @@ YES!
 \begin{frame}{SAR vs. CAR}
 \begin{itemize}
 \item SAR: $$ y_i \sim N(0, (I-W)^{-1} D^{\sim} (I-W)'^{-1}) $$
- $$ \sum_{SAR} = \sigma^{2} (I - W)^{-1} V_{\epsilon} (I - W')^{-1} $$
+ $$ \Sigma_{SAR} = \sigma^{2} (I - W)^{-1} V_{\epsilon} (I - W')^{-1} $$
 \item CAR: $$ y_i \sim N(0, (I-C)^{-1} D )$$
- $$ \sum_{CAR} = \sigma^{2} (I - C)^{-1} V_{C} $$
+ $$ \Sigma_{CAR} = \sigma^{2} (I - C)^{-1} V_{C} $$
 \end{itemize}
 \end{frame}
 
@@ -533,7 +532,7 @@ YES!
 
 \begin{frame}{Fitting a CAR (1)}
 % latex table generated in R 3.3.2 by xtable 1.8-2 package
-% Wed Mar 22 22:35:40 2017
+% Thu Mar 23 17:13:00 2017
 \begin{table}[ht]
 \centering
 \begin{tabular}{rrrrrrrr}
@@ -559,7 +558,7 @@ YES!
 
 \begin{frame}{Fitting a CAR (2)}
 % latex table generated in R 3.3.2 by xtable 1.8-2 package
-% Wed Mar 22 22:36:33 2017
+% Thu Mar 23 17:13:53 2017
 \begin{table}[ht]
 \centering
 \begin{tabular}{rrrrrrrr}
@@ -590,13 +589,35 @@ YES!
 \item A weighted moving window regression: $$ Y(x) = \alpha(u_i, v_i) + \sum_k \beta_k (u_i,v_i)x_k + e_i $$
 \end{itemize}
 \end{frame}
-\begin{frame}{Geographically Weighted Regression}
+
+\begin{frame}{Geographically Weighted Regression (Cont'd)}
 \begin{itemize}
 \item A Kernel as a way of weighting observations which are closer together
 \item Usually, fit adaptively -- different ``sizes'' depending on the density of the data
 \end{itemize}
 \includegraphics[scale=0.15]{kernel_concept.jpg}
 \end{frame}
+
+\begin{frame}[fragile]{Fitting a Geographically Weighted Regression}
+\begin{itemize}
+\item Usually, we represent the results from a GWR visually
+\end{itemize}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=200px]{figure/unnamed-chunk-18-1} 
+
+\end{knitrout}
+\end{frame}
+
+
+\begin{frame}{Geographically Weighted Regression (Cont'd)}
+\begin{itemize}
+\item GWR usually more of an exploratory tool than a hypothesis-testing tool
+\item Danger: overfitting the data
+\item Extensions: GWR $+$ Ridge regression, GWR GLMs, GWPCA
+\end{itemize}
+\end{frame}
+
 
 \begin{frame}{Workflow for Spatial Regression}
 \begin{itemize}
@@ -623,7 +644,7 @@ YES!
 \begin{itemize}
 %\item CAR Models
 \item Spatial/Spatio-temporal scan statistics
-\item Geographically Weighted Regression
+%\item Geographically Weighted Regression
 \item Kernel Density Estimation
 \item Kriging/Geostatistics
 \item Spatio-temporal approaches

@@ -15,3 +15,5 @@ GISTools
 xtable
 Rcpp
 CARBayes
+robustbase
+GWmodel

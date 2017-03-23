@@ -76,14 +76,14 @@
 \item ORDBMS - Linking spatial and attribute data
 \item Six parts, all combine to create a map to represent data
 \end{itemize}
-%\includegraphics[scale=0.2]{files_screenshot}
+\includegraphics[scale=0.2]{files_screenshot}
 \end{frame}
 
 \begin{frame}[fragile]{Loading Our data}
 <<echo = FALSE, out.width='250px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE>>=
 suppressMessages(library(rgdal))
 library(GISTools)
-file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 ny <- readOGR(dsn = file_path, 
               layer = "NYAIDS", verbose=FALSE)
 #View(ny@data)
@@ -94,14 +94,14 @@ plot(ny) # You should see a map of NYC
 \begin{frame}[fragile]{Percent Black}
 <<echo = FALSE, out.width='250px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE>>=
 
-choropleth(ny, ny$PctBlk)
+choropleth(ny, ny$PctBlk, border = "white", lwd = .25)
 @
 \end{frame}
 
 \begin{frame}[fragile]{AIDs Rate per 1000 people}
 <<echo = FALSE, out.width='250px', dpi=500, size = "tiny", cache = TRUE, message=FALSE, warning=FALSE>>=
 
-choropleth(ny, log1p(ny$Rate1000))
+choropleth(ny, log1p(ny$Rate1000), border = "white", lwd = .25)
 @
 
 \end{frame}
@@ -116,7 +116,6 @@ choropleth(ny, log1p(ny$Rate1000))
 \end{itemize}
 \end{frame}
 
-I's formula is:
 \begin{frame}{Formula for Moran's I}
 \begin{equation*}
 I = \frac{n}{\sum_{i=1}^n \sum_{j=1}^n w_{ij}}
@@ -143,7 +142,7 @@ library(rgdal)
 library(spdep)
 library(sp)
 library(spatstat)
-file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 ny <- readOGR(dsn = file_path, 
               layer = "NYAIDS", verbose=FALSE)
 nygal <- poly2nb(ny) #Create the neighborhood object
@@ -158,7 +157,7 @@ suppressMessages(library(rgdal))
 suppressMessages(library(spdep))
 suppressMessages(library(sp))
 suppressMessages(library(spatstat))
-file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 ny <- readOGR(dsn = file_path, 
               layer = "NYAIDS", verbose=FALSE)
 nygal <- poly2nb(ny) 
@@ -187,7 +186,7 @@ suppressMessages(library(rgdal))
 suppressMessages(library(spdep))
 suppressMessages(library(sp))
 suppressMessages(library(spatstat))
-file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 ny <- readOGR(dsn = file_path, 
               layer = "NYAIDS", verbose=FALSE)
 nygal <- poly2nb(ny) #Create the neighborhood object
@@ -214,7 +213,7 @@ suppressMessages(library(rgdal))
 suppressMessages(library(spdep))
 suppressMessages(library(sp))
 suppressMessages(library(spatstat))
-file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 ny <- readOGR(dsn = file_path, 
               layer = "NYAIDS", verbose=FALSE)
 nygal <- poly2nb(ny) #Create the neighborhood object
@@ -309,7 +308,7 @@ suppressMessages(library(rgdal))
 suppressMessages(library(spdep))
 suppressMessages(library(sp))
 suppressMessages(library(spatstat))
-file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 ny <- readOGR(dsn = file_path, 
               layer = "NYAIDS", verbose=FALSE)
 ny <- ny[-c(38),]
@@ -330,7 +329,7 @@ suppressMessages(library(rgdal))
 suppressMessages(library(spdep))
 suppressMessages(library(sp))
 suppressMessages(library(spatstat))
-file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 ny <- readOGR(dsn = file_path, 
               layer = "NYAIDS", verbose=FALSE)
 ny <- ny[-c(38),]
@@ -354,7 +353,7 @@ suppressMessages(library(spdep))
 suppressMessages(library(sp))
 suppressMessages(library(spatstat))
 library(xtable)
-file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 ny <- readOGR(dsn = file_path, 
               layer = "NYAIDS", verbose=FALSE)
 ny <- ny[-c(38),]
@@ -378,7 +377,7 @@ suppressMessages(library(rgdal))
 suppressMessages(library(spdep))
 suppressMessages(library(sp))
 suppressMessages(library(spatstat))
-file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 ny <- readOGR(dsn = file_path, 
               layer = "NYAIDS", verbose=FALSE)
 ny <- ny[-c(38),]
@@ -444,7 +443,7 @@ legend("left", legend=labels, fill=colors, bty="n")
 % suppressMessages(library(spdep))
 % suppressMessages(library(sp))
 % suppressMessages(library(spatstat))
-% file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+% file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 % ny <- readOGR(dsn = file_path, 
 %               layer = "NYAIDS", verbose=FALSE)
 % ny <- ny[-c(38),]
@@ -459,7 +458,7 @@ legend("left", legend=labels, fill=colors, bty="n")
 % 
 % @
 % \end{frame}
-\begin{frame}{Can we Model this Spatial Autocorrelation}
+\begin{frame}{Can we Model this Spatial Autocorrelation?}
 \begin{itemize}
 \item One option is to use fixed effects
 \item But this removes something interesting -- the spatial relationship
@@ -472,7 +471,7 @@ suppressMessages(library(rgdal))
 suppressMessages(library(spdep))
 suppressMessages(library(sp))
 suppressMessages(library(spatstat))
-file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 ny <- readOGR(dsn = file_path, 
               layer = "NYAIDS", verbose=FALSE)
 ny <- ny[-c(38),]
@@ -488,7 +487,7 @@ ny.lag.eig <- lagsarlm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH,
 	data=ny, nyQ1.gal, method="eigen", quiet=TRUE, control=(pre_eig=W.eig)) # How to use pre-calculated eigenvalues
 #summary(ny.lag.eig)
 
-texreg::texreg(l = list(ny.lag.eig), scalebox = 0.5)
+texreg::texreg(l = list(ny.lag.eig), scalebox = 0.5, caption = "SAR Model output")
 
 
 @
@@ -500,7 +499,7 @@ suppressMessages(library(rgdal))
 suppressMessages(library(spdep))
 suppressMessages(library(sp))
 suppressMessages(library(spatstat))
-file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 ny <- readOGR(dsn = file_path, 
               layer = "NYAIDS", verbose=FALSE)
 ny <- ny[-c(38),]
@@ -516,7 +515,7 @@ ny.err.eig <- errorsarlm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH,
                          data=ny, nyQ1.gal, method="eigen", quiet=TRUE)
 #summary(ny.err.eig)
 
-texreg::texreg(l = list(ny.err.eig), scalebox = 0.5)
+texreg::texreg(l = list(ny.err.eig), scalebox = 0.5, caption = "SEM model output")
 @
 \end{frame}
 
@@ -526,7 +525,7 @@ suppressMessages(library(rgdal))
 suppressMessages(library(spdep))
 suppressMessages(library(sp))
 suppressMessages(library(spatstat))
-file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 ny <- readOGR(dsn = file_path, 
               layer = "NYAIDS", verbose=FALSE)
 ny <- ny[-c(38),]
@@ -591,7 +590,7 @@ suppressMessages(library(rgdal))
 suppressMessages(library(spdep))
 suppressMessages(library(sp))
 suppressMessages(library(spatstat))
-file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 ny <- readOGR(dsn = file_path, 
               layer = "NYAIDS", verbose=FALSE)
 ny <- ny[-c(38),]
@@ -636,8 +635,8 @@ YES!
 \begin{frame}{Conditional Autoregressive Model (CAR) (cont'd)}
 \begin{itemize}
 \item This defines a joint multivariate normal distribution with variance
-\item $$ \sum_Y = (I - C)^{-1} \sum_{C} $$
-\item $$ \sum_{CAR} = \sigma^{2} (I - C)^{-1} V_{C} $$
+\item $$ \Sigma_Y = (I - C)^{-1} \sum_{C} $$
+\item $$ \Sigma_{CAR} = \sigma^{2} (I - C)^{-1} V_{C} $$
 \item $$ = \sigma^{2}V_{CAR} $$
 \end{itemize}
 \end{frame}
@@ -646,9 +645,9 @@ YES!
 \begin{frame}{SAR vs. CAR}
 \begin{itemize}
 \item SAR: $$ y_i \sim N(0, (I-W)^{-1} D^{\sim} (I-W)'^{-1}) $$
- $$ \sum_{SAR} = \sigma^{2} (I - W)^{-1} V_{\epsilon} (I - W')^{-1} $$
+ $$ \Sigma_{SAR} = \sigma^{2} (I - W)^{-1} V_{\epsilon} (I - W')^{-1} $$
 \item CAR: $$ y_i \sim N(0, (I-C)^{-1} D )$$
- $$ \sum_{CAR} = \sigma^{2} (I - C)^{-1} V_{C} $$
+ $$ \Sigma_{CAR} = \sigma^{2} (I - C)^{-1} V_{C} $$
 \end{itemize}
 \end{frame}
 
@@ -674,7 +673,7 @@ suppressMessages(library(spatstat))
 library(CARBayes) #version 4.7
 set.seed(614)
 
-file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 ny <- readOGR(dsn = file_path, layer = "NYAIDS", verbose=FALSE)
 ny <- ny[-c(38),]
 
@@ -701,7 +700,7 @@ suppressMessages(library(spatstat))
 library(CARBayes) #version 4.7
 set.seed(614)
 
-file_path <- "/Users/adamlauretig/data/prism_stuff/prism_presentation/NYAIDS_data"
+file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 ny <- readOGR(dsn = file_path, layer = "NYAIDS", verbose=FALSE)
 ny <- ny[-c(38),]
 
@@ -725,13 +724,56 @@ xtable::xtable(car2$summary.results, caption = "weakly informative priors")
 \item A weighted moving window regression: $$ Y(x) = \alpha(u_i, v_i) + \sum_k \beta_k (u_i,v_i)x_k + e_i $$
 \end{itemize}
 \end{frame}
-\begin{frame}{Geographically Weighted Regression}
+
+\begin{frame}{Geographically Weighted Regression (Cont'd)}
 \begin{itemize}
 \item A Kernel as a way of weighting observations which are closer together
 \item Usually, fit adaptively -- different ``sizes'' depending on the density of the data
 \end{itemize}
 \includegraphics[scale=0.15]{kernel_concept.jpg}
 \end{frame}
+
+\begin{frame}[fragile]{Fitting a Geographically Weighted Regression}
+\begin{itemize}
+\item Usually, we represent the results from a GWR visually
+\end{itemize}
+ <<echo = FALSE, out.width='200px', dpi=500,  cache = TRUE, message=FALSE, warning=FALSE>>=
+ suppressMessages(library(GISTools))
+ suppressMessages(library(rgdal))
+ suppressMessages(library(spdep))
+ suppressMessages(library(sp))
+ suppressMessages(library(spatstat))
+ library(GWmodel) # v. 2.0-2
+ set.seed(614)
+
+ file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
+ ny <- readOGR(dsn = file_path, layer = "NYAIDS", verbose=FALSE)
+ ny <- ny[-c(38),]
+ lrate <- log1p(ny$Rate1000)
+
+ dist_mat <- gw.dist(dp.locat = coordinates(ny), rp.locat =coordinates(ny), focus = 0, p = 2)
+ bw_silent <- capture.output({ bw <- bw.gwr(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, approach="aic",adaptive=TRUE, data=ny, kernel = "gaussian", dMat=dist_mat)})
+ gw.model1 <- gwr.basic(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH,
+   bw = bw, data = ny, kernel = "gaussian", adaptive = TRUE, p = 2,
+   longlat = FALSE)
+
+ ny$gw_out <-  gw.model1$SDF$Gini
+ shades_to_use <- shading(breaks = c(4.57, 6.33, 7.49), cols = brewer.pal(4, "Reds"))
+ choropleth(sp = ny, v = ny$gw_out, border = "white", lwd = .25, shading = shades_to_use)
+ legend_colors <- shades_to_use$cols
+ legend("left", legend = c("0-25", "25-50", "50-75", "75-100"), fill = legend_colors, box.col = "white", border = "white", title = "GWR Beta values for Gini, \nby quantile")
+ @
+\end{frame}
+
+
+\begin{frame}{Geographically Weighted Regression (Cont'd)}
+\begin{itemize}
+\item GWR usually more of an exploratory tool than a hypothesis-testing tool
+\item Danger: overfitting the data
+\item Extensions: GWR $+$ Ridge regression, GWR GLMs, GWPCA
+\end{itemize}
+\end{frame}
+
 
 \begin{frame}{Workflow for Spatial Regression}
 \begin{itemize}
@@ -758,7 +800,7 @@ xtable::xtable(car2$summary.results, caption = "weakly informative priors")
 \begin{itemize}
 %\item CAR Models
 \item Spatial/Spatio-temporal scan statistics
-\item Geographically Weighted Regression
+%\item Geographically Weighted Regression
 \item Kernel Density Estimation
 \item Kriging/Geostatistics
 \item Spatio-temporal approaches
