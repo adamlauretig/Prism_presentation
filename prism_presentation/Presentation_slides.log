@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  23 MAR 2017 10:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  23 MAR 2017 13:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2790,7 +2790,16 @@ Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 592.
 
 [86
 
-]
+] <kernel_concept.jpg, id=2478, 1660.2025pt x 1240.635pt>
+File: kernel_concept.jpg Graphic file (type jpg)
+
+<use kernel_concept.jpg>
+Package pdftex.def Info: kernel_concept.jpg used on input line 599.
+(pdftex.def)             Requested size: 249.01962pt x 186.08722pt.
+
+Overfull \vbox (22.80998pt too high) detected at line 599
+ []
+
 Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    date: 2016-02-23 03:08:46
 (epstopdf)                    size: 7233 bytes
@@ -2799,15 +2808,24 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 603.
+(epstopdf)             \includegraphics on input line 599.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
- <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 603.
+<use OSUlogo-eps-converted-to.pdf>
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 599.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
  [87
 
-]
+ <./kernel_concept.jpg>]
+File: kernel_concept.jpg Graphic file (type jpg)
+
+<use kernel_concept.jpg>
+Package pdftex.def Info: kernel_concept.jpg used on input line 599.
+(pdftex.def)             Requested size: 249.01962pt x 186.08722pt.
+
+Overfull \vbox (22.80998pt too high) detected at line 599
+ []
+
 Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    date: 2016-02-23 03:08:46
 (epstopdf)                    size: 7233 bytes
@@ -2816,12 +2834,11 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 603.
+(epstopdf)             \includegraphics on input line 599.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
-
 <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 603.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 599.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
  [88
 
@@ -2834,11 +2851,11 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 603.
+(epstopdf)             \includegraphics on input line 610.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
  <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 603.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 610.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
 
 [89
@@ -2852,11 +2869,11 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 603.
+(epstopdf)             \includegraphics on input line 610.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
  <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 603.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 610.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
  [90
 
@@ -2869,12 +2886,12 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 603.
+(epstopdf)             \includegraphics on input line 610.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
 
 <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 603.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 610.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
  [91
 
@@ -2887,11 +2904,11 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 603.
+(epstopdf)             \includegraphics on input line 610.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
  <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 603.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 610.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
 
 [92
@@ -2905,11 +2922,11 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 613.
+(epstopdf)             \includegraphics on input line 610.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
  <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 613.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 610.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
  [93
 
@@ -2922,12 +2939,12 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 613.
+(epstopdf)             \includegraphics on input line 610.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
 
 <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 613.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 610.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
  [94
 
@@ -2940,11 +2957,11 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 613.
+(epstopdf)             \includegraphics on input line 620.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
  <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 613.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 620.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
 
 [95
@@ -2958,11 +2975,11 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 613.
+(epstopdf)             \includegraphics on input line 620.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
  <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 613.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 620.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
  [96
 
@@ -2975,12 +2992,12 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 624.
+(epstopdf)             \includegraphics on input line 620.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
 
 <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 624.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 620.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
  [97
 
@@ -2993,11 +3010,11 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 624.
+(epstopdf)             \includegraphics on input line 620.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
  <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 624.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 620.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
 
 [98
@@ -3011,11 +3028,11 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 624.
+(epstopdf)             \includegraphics on input line 631.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
  <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 624.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 631.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
  [99
 
@@ -3028,12 +3045,12 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 624.
+(epstopdf)             \includegraphics on input line 631.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
 
 <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 624.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 631.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
  [100
 
@@ -3046,11 +3063,11 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 624.
+(epstopdf)             \includegraphics on input line 631.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
  <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 624.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 631.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
 
 [101
@@ -3064,11 +3081,11 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 634.
+(epstopdf)             \includegraphics on input line 631.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
  <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 634.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 631.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
  [102
 
@@ -3081,12 +3098,12 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 634.
+(epstopdf)             \includegraphics on input line 631.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
 
 <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 634.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 631.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
  [103
 
@@ -3099,11 +3116,11 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 634.
+(epstopdf)             \includegraphics on input line 641.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
  <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 634.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 641.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
 
 [104
@@ -3117,11 +3134,11 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 634.
+(epstopdf)             \includegraphics on input line 641.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
  <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 634.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 641.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
  [105
 
@@ -3134,12 +3151,12 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 634.
+(epstopdf)             \includegraphics on input line 641.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
 
 <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 634.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 641.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
  [106
 
@@ -3152,11 +3169,11 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 638.
+(epstopdf)             \includegraphics on input line 641.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
  <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 638.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 641.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
 
 [107
@@ -3170,11 +3187,11 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 645.
+(epstopdf)             \includegraphics on input line 641.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
  <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 645.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 641.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
  [108
 
@@ -3187,14 +3204,49 @@ Package epstopdf Info: Source file: <OSUlogo.eps>
 (epstopdf)                    size: 8103 bytes
 (epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
 df OSUlogo.eps>
-(epstopdf)             \includegraphics on input line 651.
+(epstopdf)             \includegraphics on input line 645.
 Package epstopdf Info: Output file is already uptodate.
 File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
 
 <use OSUlogo-eps-converted-to.pdf>
-Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 651.
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 645.
 (pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
  [109
+
+]
+Package epstopdf Info: Source file: <OSUlogo.eps>
+(epstopdf)                    date: 2016-02-23 03:08:46
+(epstopdf)                    size: 7233 bytes
+(epstopdf)             Output file: <OSUlogo-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-02-24 21:21:58
+(epstopdf)                    size: 8103 bytes
+(epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
+df OSUlogo.eps>
+(epstopdf)             \includegraphics on input line 652.
+Package epstopdf Info: Output file is already uptodate.
+File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
+ <use OSUlogo-eps-converted-to.pdf>
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 652.
+(pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
+
+[110
+
+]
+Package epstopdf Info: Source file: <OSUlogo.eps>
+(epstopdf)                    date: 2016-02-23 03:08:46
+(epstopdf)                    size: 7233 bytes
+(epstopdf)             Output file: <OSUlogo-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-02-24 21:21:58
+(epstopdf)                    size: 8103 bytes
+(epstopdf)             Command: <repstopdf --outfile=OSUlogo-eps-converted-to.p
+df OSUlogo.eps>
+(epstopdf)             \includegraphics on input line 658.
+Package epstopdf Info: Output file is already uptodate.
+File: OSUlogo-eps-converted-to.pdf Graphic file (type pdf)
+ <use OSUlogo-eps-converted-to.pdf>
+Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 658.
+(pdftex.def)             Requested size: 11.53789pt x 11.38092pt.
+ [111
 
 ]
 \tf@nav=\write6
@@ -3206,24 +3258,24 @@ Package pdftex.def Info: OSUlogo-eps-converted-to.pdf used on input line 651.
 \tf@snm=\write8
 \openout8 = `Presentation_slides.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 653.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 653.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 660.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 660.
  (./Presentation_slides.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 653.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 653.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 660.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 660.
 Package rerunfilecheck Info: File `Presentation_slides.out' has not changed.
 (rerunfilecheck)             Checksum: 545B290672F5D9D6AA9F6E6632361F2A;300.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 653.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 660.
  ) 
 Here is how much of TeX's memory you used:
- 17752 strings out of 493089
- 338422 string characters out of 6134842
+ 17764 strings out of 493089
+ 338595 string characters out of 6134842
  400309 words of memory out of 5000000
- 20503 multiletter control sequences out of 15000+600000
+ 20509 multiletter control sequences out of 15000+600000
  48740 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  56i,17n,55p,489b,571s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -3248,10 +3300,10 @@ nts/type1/public/lm/lmtt12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/
 public/lm/lmtt8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/lm/l
 mtti10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symb
 ols/msam10.pfb>
-Output written on Presentation_slides.pdf (109 pages, 1814882 bytes).
+Output written on Presentation_slides.pdf (111 pages, 1962851 bytes).
 PDF statistics:
- 3234 PDF objects out of 3580 (max. 8388607)
- 3049 compressed objects within 31 object streams
- 233 named destinations out of 1000 (max. 500000)
- 136 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 3291 PDF objects out of 3580 (max. 8388607)
+ 3102 compressed objects within 32 object streams
+ 237 named destinations out of 1000 (max. 500000)
+ 141 words of extra memory for PDF output out of 10000 (max. 10000000)
 

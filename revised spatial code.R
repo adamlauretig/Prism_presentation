@@ -36,7 +36,6 @@ car2 <- S.CARleroux(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, "gauss
 car2$summary.results
 
 library(GWmodel) # v. 2.0-2
-coordinates(ny)
 dist_mat <- gw.dist(dp.locat = coordinates(ny), rp.locat =coordinates(ny), focus = 0, p = 2)
 bw1 <- bw.gwr(lrate ~ Gini, approach="aic",adaptive=TRUE, data=ny, kernel = "gaussian", dMat=dist_mat)
 gw.model1 <- gwr.basic(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, 
