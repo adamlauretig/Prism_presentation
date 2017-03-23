@@ -45,7 +45,8 @@ file_path <- "/Users/adamlauretig/data/Prism_presentation/NYAIDS_data"
 # Loading the shapefile
 ny <- readOGR(dsn = file_path, layer = "NYAIDS", verbose=FALSE) 
 
-## Dropping the polygon with no neighbors (not best practice, but useful in this case)
+## Dropping the polygon with no neighbors (not best practice, but 
+## useful in this case)
 ny <- ny[-c(38),]
 
 
@@ -67,7 +68,8 @@ moran.test(log1p(ny$Rate1000), nyQ1.gal, alternative="two.sided", zero.policy=T)
 ############
 
 # Standardizing our values
-locm <- localmoran(log1p(ny$Rate1000), nyQ1.gal, zero.policy=T, alternative="two.sided")
+locm <- localmoran(log1p(ny$Rate1000), nyQ1.gal, zero.policy=T, 
+  alternative="two.sided")
 Scrate <- (log1p(ny$Rate1000) - mean(log1p(ny$Rate1000)))/sd(log1p(ny$Rate1000))
 lagScrate <- lag.listw(nyQ1.gal, Scrate, zero.policy=T)
 
@@ -138,15 +140,20 @@ moran.test(ny$resid, nyQ1.gal, alternative="two.sided", zero.policy=T)
 ### Where does the model fit poorly?
 ############
 
-locm_resid <- localmoran(ny$resid, nyQ1.gal, zero.policy=T, alternative="two.sided")
+locm_resid <- localmoran(ny$resid, nyQ1.gal, zero.policy=T, 
+  alternative="two.sided")
 Scrate_resid <- (ny$resid - mean(ny$resid))/sd(ny$resid)
 lagScrate_resid <- lag.listw(nyQ1.gal, Scrate, zero.policy=T)
 
 
-ny$hh_resid <- (Scrate_resid>= 0 & lagScrate_resid>= 0) & (locm_resid[,5]<= 0.05)
-ny$ll_resid <- (Scrate_resid<= 0 & lagScrate_resid<= 0) & (locm_resid[,5]<= 0.05)
-ny$hl_resid <- (Scrate_resid>= 0 & lagScrate_resid<= 0) & (locm_resid[,5]<= 0.05)
-ny$lh_resid <- (Scrate_resid<= 0 & lagScrate_resid>= 0) & (locm_resid[,5]<= 0.05)
+ny$hh_resid <- (Scrate_resid>= 0 & lagScrate_resid>= 0) & 
+  (locm_resid[,5]<= 0.05)
+ny$ll_resid <- (Scrate_resid<= 0 & lagScrate_resid<= 0) & 
+  (locm_resid[,5]<= 0.05)
+ny$hl_resid <- (Scrate_resid>= 0 & lagScrate_resid<= 0) & 
+  (locm_resid[,5]<= 0.05)
+ny$lh_resid <- (Scrate_resid<= 0 & lagScrate_resid>= 0) & 
+  (locm_resid[,5]<= 0.05)
 ny$ns_resid <- locm[,5]> 0.05
 
 # Create a single categorial variable summing up the
@@ -192,14 +199,14 @@ W.eig <- eigenw(nyQ1.gal, quiet=NULL)
 
 # The spatial lag model
 ny.lag.eig <- lagsarlm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH,
-                       data=ny, nyQ1.gal, method="eigen", quiet=TRUE,
-                       control=(pre_eig=W.eig)) # How to use pre-calculated eigenvalues
+  data=ny, nyQ1.gal, method="eigen", quiet=TRUE,
+  control=(pre_eig=W.eig)) # How to use pre-calculated eigenvalues
 summary(ny.lag.eig)
 
 
 # The spatial error model
 ny.err.eig <- errorsarlm(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH,
-                         data=ny, nyQ1.gal, method="eigen", quiet=TRUE)
+   data=ny, nyQ1.gal, method="eigen", quiet=TRUE, control=(pre_eig=W.eig))
 summary(ny.err.eig)
 
 ##############
@@ -223,19 +230,19 @@ w_mat <- ifelse(w_mat != 0, 1, 0)
 set.seed(614) # for reproducible sampling
 
 # uninformative (default) priors
-car1 <- S.CARleroux(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, "gaussian", 
-                    data=ny@data, W = w_mat,  burnin=20000, n.sample=100000, thin=10, 
-                    prior.nu2=NULL, prior.tau2=NULL, fix.rho=FALSE, rho=NULL, 
-                    verbose=FALSE)
+car1 <- S.CARleroux(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, 
+  "gaussian", data=ny@data, W = w_mat,  burnin=20000, n.sample=100000, thin=10, 
+  prior.nu2=NULL, prior.tau2=NULL, fix.rho=FALSE, rho=NULL, 
+  verbose=FALSE)
 # can't just type summary()
 car1$summary.results 
 
 
 # weakly informative priors -- note the larger number of effective samples
-car2 <- S.CARleroux(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, "gaussian", 
-                    data=ny@data, W = w_mat,  burnin=20000, n.sample=100000, thin=10, 
-                    prior.nu2=c(10, 1), prior.tau2=c(10, 1), fix.rho=FALSE, rho=NULL, 
-                    verbose=FALSE)
+car2 <- S.CARleroux(lrate ~ PctWht + PctHisp + Gini + PctHSEd + PctFemHH, 
+  "gaussian", data=ny@data, W = w_mat,  burnin=20000, n.sample=100000, thin=10, 
+  prior.nu2=c(10, 1), prior.tau2=c(10, 1), fix.rho=FALSE, rho=NULL, 
+  verbose=FALSE)
 # can't just type summary()
 car2$summary.results 
 
@@ -274,12 +281,13 @@ shades_to_use <- shading(breaks = c(4.57, 6.33, 7.49),
   cols = brewer.pal(4, "Reds"))
 
 #plotting the map
-choropleth(sp = ny, v = ny$gw_out, border = "white", lwd = .25, shading = shades_to_use)
+choropleth(sp = ny, v = ny$gw_out, border = "white", lwd = .25, 
+  shading = shades_to_use)
 #making the legend
 legend_colors <- shades_to_use$cols
 legend("left", legend = c("0-25", "25-50", "50-75", "75-100"), 
-  fill = legend_colors,bg="transparent", box.col = "transparent", border = "white",
-  title = "GWR Beta values for Gini, \nby quantile")
+  fill = legend_colors,bg="transparent", box.col = "transparent", 
+  border = "white", title = "GWR Beta values for Gini, \nby quantile")
 
 
 ###############
