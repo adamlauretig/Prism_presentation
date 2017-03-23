@@ -585,6 +585,9 @@ YES!
 \begin{frame}{Geographically Weighted Regression}
 \begin{itemize}
 \item A non-parametric method for inference with non-stationary spatial data
+\item Non-stationarity: spatial variation is not constant across the data
+\item Use kernel regression to model local spatial variation
+\item A weighted moving window regression: $$ Y(x) = \alpha(u_i, v_i) + \sum_k \beta_k (u_i,v_i)x_k + e_i $$
 \end{itemize}
 \end{frame}
 
