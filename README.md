@@ -7,4 +7,4 @@ Presented to the Ohio State University Department of Political Science on March 
 Spatial_R_Code.R is the demonstration for users to follow along.
 revised spatial code.r lacks comments and polish, though it does run.
 
-Slides are [https://github.com/adamlauretig/Prism_presentation/blob/master/prism_presentation/Presentation_slides.pdf|here].
+Slides are [here|https://github.com/adamlauretig/Prism_presentation/blob/master/prism_presentation/Presentation_slides.pdf].
